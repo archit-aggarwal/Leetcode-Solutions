@@ -17,24 +17,22 @@ class Solution {
 //     }
     
     public int minPathSum(int[][] grid) {
-            int[][] dp = new int[grid.length + 1][grid[0].length + 1];
-            for(int i=0; i<=grid.length; i++){
-                for(int j=0; j<=grid[0].length; j++){
-                    dp[i][j] = Integer.MAX_VALUE;
-                }
+            int[] dp = new int[grid[0].length + 1];
+            for(int j=0; j<=grid[0].length; j++){
+                dp[j] = Integer.MAX_VALUE;
             }
             
             for(int i=grid.length-1; i>=0; i--){
                 for(int j=grid[0].length-1; j>=0; j--){
                     if(i == grid.length - 1 && j == grid[0].length - 1){
-                        dp[i][j] = grid[i][j];
+                        dp[j] = grid[i][j];
                         continue;
                     }
                     
-                    dp[i][j] = Math.min(dp[i + 1][j], dp[i][j + 1]) + grid[i][j];
+                    dp[j] = Math.min(dp[j], dp[j + 1]) + grid[i][j];
                 }
             }
         
-            return dp[0][0];
+            return dp[0];
     }
 }
