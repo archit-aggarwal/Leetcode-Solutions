@@ -5,7 +5,7 @@ class Solution {
             return triangle.get(row).get(col);
         }
         
-        if(dp[row][col] != -1) return dp[row][col];
+        if(dp[row][col] != Integer.MIN_VALUE) return dp[row][col];
         
         int down = helper(triangle, row + 1, col, dp);
         int rightdown = helper(triangle, row + 1, col + 1, dp);
@@ -18,7 +18,7 @@ class Solution {
         int[][] dp = new int[n + 1][n + 1];  
         for(int i=0; i<=n; i++){
             for(int j=0; j<=n; j++){
-                dp[i][j] = -1;
+                dp[i][j] = Integer.MIN_VALUE;
             }
         }
         
