@@ -1,32 +1,38 @@
 class Solution {
-//     public int memo(int curr, int prev, int[] nums, int[][] dp){
-//         if(curr == nums.length) return 0;
-//         if(dp[curr][prev + 1] != -1) return dp[curr][prev + 1];
+    public int lowerBound(ArrayList<Integer> nums, int target){
+        int low = 0, high = nums.size() - 1;
+        int idx = nums.size();
         
-//         int yes = (prev == -1 || nums[prev] < nums[curr])
-//                    ? memo(curr + 1, curr, nums, dp) + 1 : 0;
+        while(low <= high){
+            int mid = low + (high - low) / 2;
             
-//         int no = memo(curr + 1, prev, nums, dp);
+            if(nums.get(mid) < target){
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+                idx = mid;
+            }
+        }
         
-//         return dp[curr][prev + 1] = Math.max(yes, no);
-//     }
+        return idx;
+    }
     
     public int lengthOfLIS(int[] nums) {
         int n = nums.length;
-        int[] dp = new int[n];
-        int maxLIS = 0;
+        
+        ArrayList<Integer> sorted = new ArrayList<>();
+        
         for(int i=0; i<nums.length; i++){
-            dp[i] = 1; // If Prev Does not Exist, then current element can have yes
-            
-            for(int j=0; j<i; j++){
-                if(nums[j] < nums[i]){
-                    dp[i] = Math.max(dp[i], dp[j] + 1);
-                }
+            int lb = lowerBound(sorted, nums[i]);
+            if(lb == sorted.size()){
+                sorted.add(nums[i]); 
+                // Current Element larger than the largest
+                // LIS of one length more
+            } else {
+                sorted.set(lb, nums[i]);
             }
-            
-            maxLIS = Math.max(maxLIS, dp[i]);
         }
         
-        return maxLIS;
+        return sorted.size(); // This Sorted Array has same size as LIS
     }
 }
