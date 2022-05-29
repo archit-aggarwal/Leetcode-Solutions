@@ -26,7 +26,6 @@ class GFG {
 class Solution {
     static String longestSubstring(String s, int N) {
         int[][] dp = new int[s.length() + 1][s.length() + 1];
-        
         int idx = s.length(), len = 0;
         
         for(int i=s.length()-1; i>=0; i--){
@@ -37,7 +36,7 @@ class Solution {
                 if(ch1 == ch2 && i != j)
                     dp[i][j] = 1 + dp[i + 1][j + 1];
                 
-                if(Math.min(i, j) + dp[i][j] >= Math.max(i, j)){
+                if(Math.abs(i - j) <= dp[i][j]){
                     // Overlapping Substrings
                     dp[i][j] = 0;
                 }
@@ -46,8 +45,6 @@ class Solution {
                     idx = i;
                     len = dp[i][j];
                 }
-                
-                // else dp[i][j] = Math.max(dp[i + 1][j], dp[i][j + 1]);
             }
         }
         
