@@ -22,7 +22,9 @@ class Solution{
     static int isPrime(int N){
         if(N <= 1) return 0;
         
-        for(int fact=2; fact<=N/2; fact++){
+        int sq = (int)Math.sqrt(N);
+        
+        for(int fact=2; fact<=sq; fact++){
             if(N % fact == 0){
                 // Fact is a factor of N
                 // N is Composite (not prime)
