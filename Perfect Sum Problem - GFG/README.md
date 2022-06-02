@@ -1,7 +1,7 @@
 # Perfect Sum Problem
 ## Medium 
 <div class="problem-statement">
-                <p></p><p><span style="font-size:18px">Given an array <strong>arr[]</strong> of non-negative integers and an integer <strong>sum</strong>, the task is to count&nbsp;all subsets of the given array with a sum equal to a given <strong>sum</strong>.</span></p>
+                <p></p><p><span style="font-size:18px">Given an array <strong>arr[]</strong> of integers and an integer <strong>sum</strong>, the task is to count&nbsp;all subsets of the given array with a sum equal to a given <strong>sum</strong>.</span></p>
 
 <p><span style="font-size:18px">Note: Answer can be very large, so, output answer modulo 10<sup>9</sup>+7</span></p>
 
