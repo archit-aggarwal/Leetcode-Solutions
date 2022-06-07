@@ -7,7 +7,7 @@ class Solution {
         // return (int)Math.sqrt(x);
         
         // Approach 3:
-        // 
+        // Binary Search - O(log2 x)
         if(x == 0 || x == 1) return x;
         
         int left = 1, right = x, ans = 1;
