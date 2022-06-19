@@ -8,9 +8,11 @@ class Solution {
         ArrayList<Integer> intersection = new ArrayList<>();
         
         for(int j=0; j<nums2.length; j++){
-            if(freq.containsKey(nums2[j]) == true && freq.get(nums2[j]) > 0) {
+            if(freq.containsKey(nums2[j]) == true) {
                 intersection.add(nums2[j]);
                 freq.put(nums2[j], freq.getOrDefault(nums2[j], 0) - 1);
+                
+                if(freq.get(nums2[j]) == 0) freq.remove(nums2[j]);
             }
         }
         
