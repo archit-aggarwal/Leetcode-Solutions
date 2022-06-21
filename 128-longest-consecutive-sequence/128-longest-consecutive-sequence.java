@@ -1,6 +1,5 @@
 class Solution {
-    
-    public int longestConsecutive(int[] nums) {
+    public int twoPointer(int[] nums){
         if(nums.length == 0) return 0;
         
         Arrays.sort(nums);
@@ -17,6 +16,43 @@ class Solution {
             
             max = Math.max(max, count);
             left = right;
+        }
+        
+        return max;
+    }
+    
+    public int longestConsecutive(int[] nums) {
+        if(nums.length == 0) return 0;
+        
+        // Unique Key
+        HashMap<Integer, Boolean> isStarting = new HashMap<>();
+       
+        // 1. Take All Elements as Potential Starting Sequence
+        for(int i=0; i<nums.length; i++){
+            isStarting.put(nums[i], true);
+        }
+        
+        // 2. Remove Elements which cannot start a new Sequence
+        for(int i=0; i<nums.length; i++){
+            if(isStarting.containsKey(nums[i] - 1) == true){
+                // We Will Join the Previous Sequence, 
+                // Hence, we cannot start the sequence
+                isStarting.put(nums[i], false);
+            }
+        }
+        
+        int max = 0;
+        for(int start: isStarting.keySet()){
+            
+            if(isStarting.get(start) == true){
+                int curr = 1;
+                for(int end=start+1; isStarting.containsKey(end) == true; end++){
+                    curr++;
+                }
+
+                max = Math.max(max, curr);
+            }
+            
         }
         
         return max;
