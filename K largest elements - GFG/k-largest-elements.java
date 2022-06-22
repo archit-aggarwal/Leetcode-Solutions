@@ -41,21 +41,34 @@ class Solution
     //Function to return k largest elements from an array.
     public static ArrayList<Integer> kLargest(int arr[], int n, int k)
     {
-        PriorityQueue<Integer> q = new PriorityQueue<>();
+        // Time - O(N log K) MIN HEAP APPROACH
+        // PriorityQueue<Integer> q = new PriorityQueue<>();
+        // for(int i=0; i<n; i++){
+        //     if(i < k){
+        //         q.add(arr[i]);
+        //     } else if(q.peek() < arr[i]) {
+        //         q.remove();
+        //         q.add(arr[i]);
+        //     }
+        // }
+        
+        // ArrayList<Integer> res = new ArrayList<>();
+        // while(q.size() > 0){
+        //     res.add(q.remove());
+        // }
+        // Collections.reverse(res);
+        // return res;
+        
+        // Time - O(N + KlogN) MAX HEAP APPROACH
+        PriorityQueue<Integer> q = new PriorityQueue<>(Collections.reverseOrder());
         for(int i=0; i<n; i++){
-            if(i < k){
-                q.add(arr[i]);
-            } else if(q.peek() < arr[i]) {
-                q.remove();
-                q.add(arr[i]);
-            }
+            q.add(arr[i]);
         }
         
         ArrayList<Integer> res = new ArrayList<>();
-        while(q.size() > 0){
+        while(res.size() < k){
             res.add(q.remove());
         }
-        Collections.reverse(res);
         return res;
     }
 }
