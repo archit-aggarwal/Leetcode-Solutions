@@ -1,9 +1,10 @@
 class Solution {
     public int findKthLargest(int[] arr, int k) {
+        ArrayList<Integer> temp = new ArrayList<>();
+        for(int val: arr) temp.add(val);
+        
         PriorityQueue<Integer> q = new PriorityQueue<>(Collections.reverseOrder());
-        for(int i=0; i<arr.length; i++){
-            q.add(arr[i]);
-        }
+        q.addAll(temp);
         
         int kthLargest = q.peek();
         while(k-- > 0){
