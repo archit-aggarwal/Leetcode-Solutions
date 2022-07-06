@@ -29,8 +29,7 @@ class GFG{
 //User function Template for Java
 
 
-class Solution
-{ 
+class Solution {
     boolean isCelebrity(int idx, int[][] arr, int N){
         // ROW => 0s
         for(int i=0; i<N; i++){
@@ -49,11 +48,27 @@ class Solution
     
     int celebrity(int M[][], int N)
     {
+        Queue<Integer> q = new ArrayDeque<>();
         for(int i=0; i<N; i++){
-            if(isCelebrity(i, M, N) == true){
-                return i;
+            q.add(i); // Everyone is a potential celebrity
+        }
+        
+        while(q.size() > 1){
+            int row = q.remove();
+            int col = q.remove();
+            if(M[row][col] == 0){
+                // row does not know col -> col is not a celebrity
+                q.add(row);
+            } else {
+                // row knows col -> row is not a celebrity
+                q.add(col);
             }
         }
+        
+        if(isCelebrity(q.peek(), M, N) == true){
+            return q.remove();
+        }
+        
         return -1; // No Celebrity Found
     }
 }
