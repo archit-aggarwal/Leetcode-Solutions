@@ -1,24 +1,36 @@
 class Solution {
     public int[] intersect(int[] nums1, int[] nums2) {
-        HashMap<Integer, Integer> freq = new HashMap<>();
-        
-        for(int i=0; i<nums1.length; i++)
-            freq.put(nums1[i], freq.getOrDefault(nums1[i], 0) + 1);
-        
-        ArrayList<Integer> intersection = new ArrayList<>();
-        
-        for(int j=0; j<nums2.length; j++){
-            if(freq.containsKey(nums2[j]) == true) {
-                intersection.add(nums2[j]);
-                freq.put(nums2[j], freq.getOrDefault(nums2[j], 0) - 1);
-                
-                if(freq.get(nums2[j]) == 0) freq.remove(nums2[j]);
+        HashMap<Integer, Integer> freq1 = new HashMap<>();
+        for(int i=0; i<nums1.length; i++){
+            if(freq1.containsKey(nums1[i]) == true){
+                freq1.put(nums1[i], freq1.get(nums1[i]) + 1);
+            } else {
+                freq1.put(nums1[i], 1);
             }
         }
         
-        int[] res = new int[intersection.size()];
+        HashMap<Integer, Integer> freq2 = new HashMap<>();
+        for(int i=0; i<nums2.length; i++){
+           if(freq2.containsKey(nums2[i]) == true){
+                freq2.put(nums2[i], freq2.get(nums2[i]) + 1);
+            } else {
+                freq2.put(nums2[i], 1);
+            } 
+        }
+        
+        ArrayList<Integer> common = new ArrayList<>();
+        for(Integer key: freq1.keySet()){
+            if(freq2.containsKey(key) == true){
+                int min = Math.min(freq1.get(key), freq2.get(key));
+                for(int f=0; f<min; f++){
+                    common.add(key);
+                }
+            }
+        }
+        
+        int[] res = new int[common.size()];
         for(int i=0; i<res.length; i++)
-            res[i] = intersection.get(i);
+            res[i] = common.get(i);
         return res;
     }
 }
