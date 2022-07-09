@@ -51,7 +51,7 @@ class Solution
     {
         boolean[] vis = new boolean[V];
         topo = new int[V]; idx = V - 1;
-        for(int i=0; i<V; i++) DFS(0, adj, vis);
+        for(int i=0; i<V; i++) DFS(i, adj, vis);
         
         Arrays.fill(vis, false);
         idx = V - 1;
