@@ -36,7 +36,6 @@ class Solution
 {
     int[] topo;
     int idx;
-    
     void DFS(int src, ArrayList<ArrayList<Integer>> adj, boolean[] visited){
         if(visited[src] == true) return;
         visited[src] = true;
@@ -47,14 +46,6 @@ class Solution
         topo[idx--] = src;
     }
     
-    void DFS2(int src, ArrayList<ArrayList<Integer>> adj, boolean[] visited){
-        if(visited[src] == true) return;
-        visited[src] = true;
-        
-        for(Integer nbr: adj.get(src))
-            DFS2(nbr, adj, visited);
-    }
-    
     //Function to find a Mother Vertex in the Graph.
     public int findMotherVertex(int V, ArrayList<ArrayList<Integer>>adj)
     {
@@ -63,7 +54,9 @@ class Solution
         for(int i=0; i<V; i++) DFS(0, adj, vis);
         
         Arrays.fill(vis, false);
-        DFS2(topo[0], adj, vis);
+        idx = V - 1;
+        
+        DFS(topo[0], adj, vis);
         for(int i=0; i<V; i++){
             if(vis[i] == false) return -1;
         }
