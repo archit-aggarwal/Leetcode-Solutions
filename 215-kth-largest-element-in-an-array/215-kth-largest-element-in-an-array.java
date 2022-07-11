@@ -1,27 +1,14 @@
 class Solution {
-    public int partition(int[] arr, int l, int r){
-        int j = l;
-        for(int i=l; i<=r; i++){
-            if(arr[i] <= arr[r]){
-                int temp = arr[j];
-                arr[j] = arr[i];
-                arr[i] = temp;
-                j++;
-            }
-        }
-        return j - 1;
-    }
-    
-    public int quickSelect(int[] arr, int l, int r, int k){
-        if(l == r) return arr[l];
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> q = new PriorityQueue<>();
+        for(int i=0; i<nums.length; i++) q.add(nums[i]);
         
-        int pivot = partition(arr, l, r);
-        if(pivot == arr.length - k) return arr[pivot];
-        if(pivot > arr.length - k) return quickSelect(arr, l, pivot - 1, k);
-        return quickSelect(arr, pivot + 1, r, k);
-    }
-    
-    public int findKthLargest(int[] arr, int k) {
-        return quickSelect(arr, 0, arr.length - 1, k);
+        int idx = 0;
+        while(q.size() > 0){
+            nums[idx] = q.remove();
+            idx++;
+        }
+        
+        return nums[nums.length - k];
     }
 }
