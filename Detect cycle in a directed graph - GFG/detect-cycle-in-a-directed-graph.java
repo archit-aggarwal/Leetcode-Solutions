@@ -44,14 +44,44 @@ class Solution {
         return false;
     }
     
-    public boolean isCyclic(int V, ArrayList<ArrayList<Integer>> adj) {
-        int[] vis = new int[V];
-        Arrays.fill(vis, -1);
-        
-        for(int i=0; i<V; i++){
-            if(DFS(i, adj, vis) == true)
-                return true;
+    public boolean BFS(int n, ArrayList<ArrayList<Integer>> adj){
+        int[] incoming = new int[n];
+        for(int src=0; src<adj.size(); src++){
+            for(Integer nbr: adj.get(src)){
+                incoming[nbr]++;
+            }
         }
-        return false;
+        
+        Queue<Integer> q = new LinkedList<>();
+        // Multisource Breadth First Traversal
+        for(int i=0; i<n; i++){
+            if(incoming[i] == 0){
+                q.add(i);
+            }
+        }
+        
+        
+        int visited = 0;
+        
+        while(q.size() > 0){
+            int src = q.remove();
+            visited++;
+            
+            for(Integer nbr: adj.get(src)){
+                incoming[nbr]--;
+                if(incoming[nbr] == 0){
+                    q.add(nbr);
+                }
+            }
+        }
+        
+        if(visited == n) return false; 
+        // If all nodes are part of topo sort, hence graph is directed acyclic.
+        
+        return true; // Cycle is found because some nodes were not visited
+    }
+    
+    public boolean isCyclic(int V, ArrayList<ArrayList<Integer>> adj) {
+        return BFS(V, adj);
     }
 }
