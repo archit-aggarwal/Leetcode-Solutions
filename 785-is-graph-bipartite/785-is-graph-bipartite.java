@@ -1,13 +1,13 @@
 class Solution {
     public boolean DFS(int src, int level, int[][] graph, int[] vis){
         if(vis[src] != -1){
-            if(vis[src] != level % 2) return false;
+            if(vis[src] != level) return false;
             return true;
         }
         
-        vis[src] = level % 2;
+        vis[src] = level;
         for(int nbr: graph[src]){
-            if(DFS(nbr, level + 1, graph, vis) == false){
+            if(DFS(nbr, 1 - level, graph, vis) == false){
                 // Cycle of Odd Length
                 return false;
             }
