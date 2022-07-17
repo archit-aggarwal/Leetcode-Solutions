@@ -37,7 +37,7 @@ class Solution {
             }
         }
         
-        int time = vis[k - 1];
+        int time = 0;
         for(int i=0; i<n; i++){
             time = Math.max(time, vis[i]);
         }
