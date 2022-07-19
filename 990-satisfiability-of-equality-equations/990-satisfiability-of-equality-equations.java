@@ -1,6 +1,5 @@
 class Solution {
     public void union(int v1, int v2, int[] par, int[] rank){
-        if(v1 == v2) return;
         v1 = find(v1, par);
         v2 = find(v2, par);
         
