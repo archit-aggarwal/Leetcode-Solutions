@@ -37,14 +37,14 @@ class Solution {
         }
         
         PriorityQueue<Pair> q = new PriorityQueue<>();
-        // q.add(new Pair(source, -1, 0));
-        for(int i=0; i<adj[source].size(); i++){
-            q.add(new Pair(source, adj[source].get(i).busColor, 1));
-        }
+        q.add(new Pair(source, routes.length, 0));
+        // for(int i=0; i<adj[source].size(); i++){
+        //     q.add(new Pair(source, adj[source].get(i).busColor, 1));
+        // }
         
         int[][] vis = new int[n + 1][routes.length + 1];
         for(int i=0; i<=n; i++){
-         for(int j=0; j<routes.length; j++)
+         for(int j=0; j<=routes.length; j++)
              vis[i][j] = -1;
         }
         
