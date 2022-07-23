@@ -1,17 +1,17 @@
 class Solution {
     public static class Pair implements Comparable<Pair>{
-        int busStop; // NODE
-        int busColor; // COLOR (EDGE)
-        int busChanges;
+        int Stop; // NODE
+        int Color; // COLOR (EDGE)
+        int Changes;
         
-        Pair(int busStop, int busColor, int busChanges){
-            this.busStop = busStop;
-            this.busColor = busColor;
-            this.busChanges = busChanges;
+        Pair(int Stop, int Color, int Changes){
+            this.Stop = Stop;
+            this.Color = Color;
+            this.Changes = Changes;
         }
         
         public int compareTo(Pair other){
-            return this.busChanges - other.busChanges;
+            return this.Changes - other.Changes;
         }
     }
     public int numBusesToDestination(int[][] routes, int source, int target) {
@@ -25,7 +25,6 @@ class Solution {
         ArrayList<Pair>[] adj = new ArrayList[n + 1];
         for(int i=0; i<=n; i++) adj[i] = new ArrayList<>();
         
-        // Loop on All Buses (Routes)
         for(int i=0; i<routes.length; i++){
             for(int j=0; j<routes[i].length; j++){
                 int src = routes[i][j];
@@ -38,30 +37,24 @@ class Solution {
         
         PriorityQueue<Pair> q = new PriorityQueue<>();
         q.add(new Pair(source, routes.length, 0));
-        // for(int i=0; i<adj[source].size(); i++){
-        //     q.add(new Pair(source, adj[source].get(i).busColor, 1));
-        // }
         
         int[][] vis = new int[n + 1][routes.length + 1];
-        for(int i=0; i<=n; i++){
-         for(int j=0; j<=routes.length; j++)
+        for(int i=0; i<=n; i++)
+            for(int j=0; j<=routes.length; j++)
              vis[i][j] = -1;
-        }
-        
-        if(adj[source].size() == 0) return -1; // No Bus from Source
         
         while(q.size() > 0){
             Pair top = q.remove();
-            if(top.busStop == target) return top.busChanges;
+            if(top.Stop == target) return top.Changes;
             
-            if(vis[top.busStop][top.busColor] != -1) continue;
-            vis[top.busStop][top.busColor] = top.busChanges;
+            if(vis[top.Stop][top.Color] != -1) continue;
+            vis[top.Stop][top.Color] = top.Changes;
             
-            for(Pair nbr: adj[top.busStop]){
-                if(top.busColor == nbr.busColor){
-                    q.add(new Pair(nbr.busStop, nbr.busColor, top.busChanges));
+            for(Pair nbr: adj[top.Stop]){
+                if(top.Color == nbr.Color){
+                    q.add(new Pair(nbr.Stop, nbr.Color, top.Changes));
                 } else {
-                    q.add(new Pair(nbr.busStop, nbr.busColor, top.busChanges + 1));
+                    q.add(new Pair(nbr.Stop, nbr.Color, top.Changes + 1));
                 }
             }
         }
