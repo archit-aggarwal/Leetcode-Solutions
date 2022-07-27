@@ -1,17 +1,17 @@
 class Solution {
     public static class Pair implements Comparable<Pair>{
-        int Stop; // NODE
-        int Color; // COLOR (EDGE)
-        int Changes;
+        int stop; // NODE
+        int color; // COLOR (EDGE)
+        int changes;
         
-        Pair(int Stop, int Color, int Changes){
-            this.Stop = Stop;
-            this.Color = Color;
-            this.Changes = Changes;
+        Pair(int stop, int color, int changes){
+            this.stop = stop;
+            this.color = color;
+            this.changes = changes;
         }
         
         public int compareTo(Pair other){
-            return this.Changes - other.Changes;
+            return this.changes - other.changes;
         }
     }
     public int numBusesToDestination(int[][] routes, int source, int target) {
@@ -45,16 +45,16 @@ class Solution {
         
         while(q.size() > 0){
             Pair top = q.remove();
-            if(top.Stop == target) return top.Changes;
+            if(top.stop == target) return top.changes;
             
-            if(vis[top.Stop][top.Color] != -1) continue;
-            vis[top.Stop][top.Color] = top.Changes;
+            if(vis[top.stop][top.color] != -1) continue;
+            vis[top.stop][top.color] = top.changes;
             
-            for(Pair nbr: adj[top.Stop]){
-                if(top.Color == nbr.Color){
-                    q.add(new Pair(nbr.Stop, nbr.Color, top.Changes));
+            for(Pair nbr: adj[top.stop]){
+                if(top.color == nbr.color){
+                    q.add(new Pair(nbr.stop, nbr.color, top.changes));
                 } else {
-                    q.add(new Pair(nbr.Stop, nbr.Color, top.Changes + 1));
+                    q.add(new Pair(nbr.stop, nbr.color, top.changes + 1));
                 }
             }
         }
