@@ -1,45 +1,42 @@
 class Solution {
-    // Merge 2 Sorted Arrays -> O(N + M)
-    public int[] merge(int[] arr1, int[] arr2){
-        int[] res = new int[arr1.length + arr2.length];
-        int ptr1 = 0, ptr2 = 0, ptr3 = 0;
-        
-        while(ptr1 < arr1.length && ptr2 < arr2.length){
-            if(arr1[ptr1] <= arr2[ptr2]){
-                res[ptr3] = arr1[ptr1];
-                ptr1++; ptr3++;
+    public int partition(int[] arr, int left, int right, int pivot){
+        int low = left, high = left;
+
+        while(high <= right){
+
+            if(arr[high] > pivot){
+                high++;
             } else {
-                res[ptr3] = arr2[ptr2];
-                ptr2++; ptr3++;
+                swap(arr, high, low);
+                low++; high++;
             }
         }
         
-        while(ptr1 < arr1.length){
-            res[ptr3] = arr1[ptr1];
-            ptr1++; ptr3++;
-        }
-        
-        while(ptr2 < arr2.length){
-            res[ptr3] = arr2[ptr2];
-            ptr2++; ptr3++;
-        }
-        
-        return res;
-  }
-    
-    public int[] sortArray(int left, int right, int[] nums){
-        if(left > right) return new int[0];
-        if(left == right) return new int[]{nums[left]};
-        
-        int mid = left + (right - left) / 2;
-        
-        int[] lres = sortArray(left, mid, nums);
-        int[] rres = sortArray(mid + 1, right, nums);
-        
-        return merge(lres, rres);
+        return low - 1;
     }
     
+    public void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    
+    public void randomize(int[] nums, int left, int right){
+        int randomIdx = (int)(Math.random()*(right-left+1)+left);
+        swap(nums, randomIdx, right);
+    }
+    
+    public void quickSort(int[] nums, int left, int right){
+        if(left >= right) return; // Array of 0 or 1 element -> Already Sorted
+        
+        randomize(nums, left, right);
+        int pivot = partition(nums, left, right, nums[right]);
+        quickSort(nums, left, pivot - 1);
+        quickSort(nums, pivot + 1, right);
+    }
+
     public int[] sortArray(int[] nums) {
-        return sortArray(0, nums.length - 1, nums);
+        quickSort(nums, 0, nums.length - 1);
+        return nums;
     }
 }
