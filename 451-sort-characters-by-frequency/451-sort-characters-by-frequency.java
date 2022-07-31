@@ -1,26 +1,26 @@
 class Solution {
-    public String frequencySort(String s) {
-        HashMap<Character, Integer> freq = new HashMap<>();
-        for(int i=0; i<s.length(); i++){
-            char ch = s.charAt(i);
-            freq.put(ch, freq.getOrDefault(ch, 0) + 1);
+    public String frequencySort(String arr) {
+        int[] freq = new int[130];
+        for(int i=0; i<arr.length(); i++){
+            int bucket = arr.charAt(i);
+            freq[bucket]++;
         }
         
-        HashMap<Integer, ArrayList<Character>> rev = new HashMap<>();
-        for(Character ch: freq.keySet()){
-            int f = freq.get(ch);
-            if(rev.containsKey(f) == false)
-                rev.put(f, new ArrayList<>());
-            rev.get(f).add(ch);
+        ArrayList<Character>[] buckets = new ArrayList[arr.length() + 1];
+        for(int i=0; i<buckets.length; i++){
+            buckets[i] = new ArrayList<Character>();
+        } 
+        
+        for(int i=0; i<freq.length; i++){
+            buckets[freq[i]].add((char)i);
         }
+        
         
         StringBuilder res = new StringBuilder("");
-        for(int f=s.length(); f>=1; f--){
-            if(rev.containsKey(f) == true){
-                for(Character ch: rev.get(f)){
-                    for(int i=0; i<f; i++)
-                        res.append(ch);
-                }    
+        for(int i=buckets.length-1; i>0; i--){
+            for(Character ch: buckets[i]){
+                for(int f=0; f<i; f++)
+                    res.append(ch);
             }
         }
         
