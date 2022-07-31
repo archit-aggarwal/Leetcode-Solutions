@@ -1,44 +1,57 @@
 class Solution {
-    public void union(int v1, int v2, int[] par, int[] rank){
-        v1 = find(v1, par);
-        v2 = find(v2, par);
-        
-        if(v1 == v2) return;
-        if(rank[v1] >= rank[v2]){
-            par[v2] = v1;
-            rank[v1] += rank[v2];
-        }else {
-            par[v1] = v2;
-            rank[v2] += rank[v1];
+    static class DSU {
+        int[] parent;
+        int[] rank;
+
+        DSU(int n) {
+            parent = new int[n];
+            Arrays.fill(parent, -1);
+            
+            rank = new int[n];
+            Arrays.fill(rank, 1);
         }
-    }
-    
-    public int find(int v, int[] par){
-        if(par[v] == -1) return v;
-        return par[v] = find(par[v], par);
+
+        public void union(int a, int b) {
+            int pa = find(a);
+            int pb = find(b);
+            if (pa == pb)
+                return;
+
+            if (rank[pa] > rank[pb]) {
+                parent[pb] = pa;
+                rank[pa] += rank[pb];
+            } else {
+                parent[pa] = pb;
+                rank[pb] += rank[pa];
+            }
+        }
+
+        public int find(int a) {
+            if (parent[a] == -1) return a;
+            return parent[a] = find(parent[a]);
+        }
     }
     
     public boolean equationsPossible(String[] equations) {
-        int[] par = new int[26];
-        Arrays.fill(par, -1);
-        int[] rank = new int[26];
-        
-        for(String eq: equations){
-            int v1 = eq.charAt(0) - 'a';
-            int v2 = eq.charAt(3) - 'a';
+        DSU sets = new DSU(26);
+        for(String eqn: equations){
+            int left = eqn.charAt(0) - 'a';
+            int right = eqn.charAt(3) - 'a';
             
-            if(eq.charAt(1) == '=') 
-                union(v1, v2, par, rank);
+            if(eqn.charAt(1) == '=')
+                sets.union(left, right);
         }
         
-        for(String eq: equations){
-            int v1 = eq.charAt(0) - 'a';
-            int v2 = eq.charAt(3) - 'a';
+        for(String eqn: equations){
+            int left = eqn.charAt(0) - 'a';
+            int right = eqn.charAt(3) - 'a';
             
-            if(eq.charAt(1) == '!' && (v1 == v2 || find(v1, par) == find(v2, par))) 
+            if(eqn.charAt(1) == '!' && sets.find(left) == sets.find(right))
                 return false;
         }
         
         return true;
     }
+    
+    
 }
