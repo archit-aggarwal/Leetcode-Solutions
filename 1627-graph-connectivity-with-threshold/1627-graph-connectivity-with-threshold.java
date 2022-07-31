@@ -6,6 +6,7 @@ class DSU{
         parent = new int[n + 1];
         Arrays.fill(parent, -1);
         rank = new int[n + 1];
+        Arrays.fill(rank, 1);
     }
     
     public void union(int a, int b){
