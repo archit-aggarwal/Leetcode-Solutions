@@ -8,7 +8,7 @@ class Solution {
             Arrays.fill(parent, -1);
             
             rank = new int[n];
-            Arrays.fill(rank, -1);
+            Arrays.fill(rank, 1);
         }
 
         public void union(int a, int b){
