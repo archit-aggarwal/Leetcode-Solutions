@@ -1,50 +1,59 @@
 class Solution {
-    public int rank[];
-    public int parent[];
-    
-    public void union(int i, int j, String[] strs){
-        if(similar(strs[i], strs[j]) == false)
-            return;
-        
-        i = find(i);
-        j = find(j);
-        
-        if(i == j) return;
-        
-        if(rank[i] >= rank[j]){
-            rank[i] += rank[j];
-            parent[j] = i;
-        } else {
-            rank[j] += rank[i];
-            parent[i] = j;
+    static class DSU {
+        int[] parent;
+        int[] rank;
+
+        DSU(int n) {
+            parent = new int[n];
+            Arrays.fill(parent, -1);
+            
+            rank = new int[n];
+            Arrays.fill(rank, 1);
+        }
+
+        public void union(int a, int b) {
+            int pa = find(a);
+            int pb = find(b);
+            if (pa == pb)
+                return;
+
+            if (rank[pa] > rank[pb]) {
+                parent[pb] = pa;
+                rank[pa] += rank[pb];
+            } else {
+                parent[pa] = pb;
+                rank[pb] += rank[pa];
+            }
+        }
+
+        public int find(int a) {
+            if (parent[a] == -1) return a;
+            return parent[a] = find(parent[a]);
         }
     }
     
-    public int find(int i){
-        if(parent[i] == -1) return i;
-        return parent[i] = find(parent[i]);
-    }
-    
-    public boolean similar(String a, String b){
+    public boolean isSimilar(String a, String b){
         int count = 0;
-        for(int k=0; k<a.length(); k++)
-            if(a.charAt(k) != b.charAt(k))
-                count++; 
-        return (count <= 2) ? true : false;
+        for(int i=0; i<a.length(); i++){
+            if(a.charAt(i) != b.charAt(i))
+                count++;
+        }
+        if(count <= 2) return true;
+        return false;
     }
     
     public int numSimilarGroups(String[] strs) {
-        rank = new int[strs.length];
-        parent = new int[strs.length];
-        Arrays.fill(parent, -1);
+        DSU sets = new DSU(strs.length);
         
         for(int i=0; i<strs.length; i++)
             for(int j=i+1; j<strs.length; j++)
-                union(i, j, strs);
+                if(isSimilar(strs[i], strs[j]) == true)
+                    sets.union(i, j);
         
         int groups = 0;
-        for(int i=0; i<strs.length; i++)
-            if(parent[i] == -1) groups++;
+        for(int i=0; i<strs.length; i++){
+            if(sets.find(i) == i) groups++;
+        }
         return groups;
     }
 }
