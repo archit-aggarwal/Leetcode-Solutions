@@ -1,47 +1,77 @@
-class DSU{
-    int[] parent;
-    
-    DSU(int n){
-        parent = new int[n];
-        for(int i=0; i<n; i++) parent[i] = i;
-    }
-    
-    public void union(int a, int b){
-        a = find(a);
-        b = find(b);
-        
-        if(a <= b) parent[b] = a;
-        else parent[a] = b;
-    }
-    
-    public int find(int a){
-        if(parent[a] == a) return a;
-        return parent[a] = find(parent[a]);
-    }
-}
-
 class Solution {
+    static class DSU {
+        int[] parent;
+        int[] rank;
+
+        DSU(int n) {
+            parent = new int[n];
+            Arrays.fill(parent, -1);
+            rank = new int[n];
+            Arrays.fill(rank, 1);
+        }
+
+        public void union(int a, int b) {
+            int pa = find(a);
+            int pb = find(b);
+            if (pa == pb)
+                return;
+
+            if (rank[pa] > rank[pb]) {
+                parent[pb] = pa;
+                rank[pa] += rank[pb];
+            } else {
+                parent[pa] = pb;
+                rank[pb] += rank[pa];
+            }
+        }
+
+        public int find(int a) {
+            if (parent[a] == -1)
+                return a;
+            return parent[a] = find(parent[a]);
+        }
+    }
+    
     public String smallestStringWithSwaps(String s, List<List<Integer>> pairs) {
         DSU sets = new DSU(s.length());
-        for(List<Integer> pair: pairs)
-            sets.union(pair.get(0), pair.get(1));
         
-        HashMap<Integer, List<Integer>> idx = new HashMap<>();
-        HashMap<Integer, List<Character>> ch = new HashMap<>();
+        for(List<Integer> pair: pairs){
+            sets.union(pair.get(0), pair.get(1));
+        }
+        
+        // Parent -> Components Nodes
+        HashMap<Integer, ArrayList<Character>> Char = new HashMap<>();
+        HashMap<Integer, ArrayList<Integer>> Idx = new HashMap<>();
+        
         for(int i=0; i<s.length(); i++){
-            idx.put(i, new ArrayList<>());
-            idx.get(sets.find(i)).add(i);
+            int parent = sets.find(i);
+            if(Idx.containsKey(parent) == false){
+                Char.put(parent, new ArrayList<>());
+                Idx.put(parent, new ArrayList<>());
+            }
             
-            ch.put(i, new ArrayList<>());
-            ch.get(sets.find(i)).add(s.charAt(i));
+            Char.get(parent).add(s.charAt(i));
+            Idx.get(parent).add(i);
+        }
+        
+        for(Integer parent: Char.keySet()) {
+            Collections.sort(Char.get(parent));
+            
+            System.out.println(parent + " : ");
+            System.out.println(Idx.get(parent));
+            System.out.println(Char.get(parent));
         }
         
         StringBuilder res = new StringBuilder(s);
-        for(int i=0; i<s.length(); i++){
-            Collections.sort(ch.get(i));
-            for(int j=0; j<idx.get(i).size(); j++)
-                res.setCharAt(idx.get(i).get(j), ch.get(i).get(j));
+        
+        for(Integer parent: Idx.keySet()){
+            for(int j=0; j<Char.get(parent).size(); j++){
+                int idx = Idx.get(parent).get(j);
+                char ch = Char.get(parent).get(j);
+                res.setCharAt(idx, ch);
+            }
         }
+        
         return res.toString();
     }
 }
