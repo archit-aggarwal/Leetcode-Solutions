@@ -54,17 +54,11 @@ class Solution {
             Idx.get(parent).add(i);
         }
         
-        for(Integer parent: Char.keySet()) {
-            Collections.sort(Char.get(parent));
-            
-            System.out.println(parent + " : ");
-            System.out.println(Idx.get(parent));
-            System.out.println(Char.get(parent));
-        }
-        
         StringBuilder res = new StringBuilder(s);
         
         for(Integer parent: Idx.keySet()){
+            Collections.sort(Char.get(parent));
+            
             for(int j=0; j<Char.get(parent).size(); j++){
                 int idx = Idx.get(parent).get(j);
                 char ch = Char.get(parent).get(j);
