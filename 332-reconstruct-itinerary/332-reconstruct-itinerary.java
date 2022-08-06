@@ -3,7 +3,7 @@ class Solution {
     
     public void DFS(String src, HashMap<String, PriorityQueue<String>> adj){
         while(adj.get(src).size() > 0){
-            String nbr = adj.get(src).poll();
+            String nbr = adj.get(src).remove();
             DFS(nbr, adj);
         }
         
