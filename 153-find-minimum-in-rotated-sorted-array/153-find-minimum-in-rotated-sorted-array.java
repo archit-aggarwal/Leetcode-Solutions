@@ -1,22 +1,22 @@
 class Solution {
-    public int findMin(int[] nums) {
-        int left = 0, right = nums.length - 1;
+    public int findMin(int[] arr) {
+        int left = 0, right = arr.length - 1;
         
         while(left <= right){
             int mid = left + (right - left) / 2;
             
-            if(mid >= 1 && nums[mid - 1] > nums[mid]){
-                // Pivot Element is at Mid
-                return nums[mid];
-            }
-            else if(nums[mid] >= nums[0]){
+            int lVal = (mid == 0) ? Integer.MAX_VALUE : arr[mid - 1];
+            int rVal = (mid == arr.length - 1) ? Integer.MAX_VALUE : arr[mid + 1];
+                
+            if(arr[mid] < lVal && arr[mid] < rVal){
+                return arr[mid];
+            } else if(arr[mid] > arr[right]){
                 left = mid + 1;
             } else {
                 right = mid - 1;
             }
         }
         
-        // Corner Case: Sorted Array without Rotations
-        return nums[0];
+        return arr[0];
     }
 }
