@@ -1,14 +1,19 @@
 class Solution {
     public int missingNumber(int[] nums) {
-        HashSet<Integer> set = new HashSet<>();
-        for(int val: nums) set.add(val);
+        int n = nums.length;
         
+        // Visited Each Element Present in Array
         for(int i=0; i<nums.length; i++){
-            if(set.contains(i) == false){
-                return i;
-            }
+            int val = nums[i] % (n + 1);
+            if(val < n) nums[val] += (n + 1);
         }
         
-        return nums.length;
+        // Find Missing Element
+        for(int i=0; i<nums.length; i++){
+            if(nums[i] < n + 1) return i;
+        }
+        
+        return n; 
+        // If all boxes are visited, then n itself is the answer
     }
 }
