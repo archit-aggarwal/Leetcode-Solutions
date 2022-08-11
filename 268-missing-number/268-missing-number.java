@@ -1,20 +1,15 @@
 class Solution {
     public int missingNumber(int[] nums) {
-        HashMap<Integer, Boolean> present = new HashMap<>();
-        for(int i=0; i<=nums.length; i++){
-            present.put(i, false);
+        int n = nums.length;
+        
+        for(int i=0; i<n; i++){
+            int val = nums[i] % (n + 1);
+            if(val < n) nums[val] += (n + 1);
         }
         
-        for(int i=0; i<nums.length; i++){
-            present.put(nums[i], true);
+        for(int i=0; i<n; i++){
+            if(nums[i] <= n) return i;
         }
-        
-        for(int i=0; i<=nums.length; i++){
-            if(present.get(i) == false){
-                return i;
-            }
-        }
-        
-        return nums.length;
+        return n;
     }
 }
