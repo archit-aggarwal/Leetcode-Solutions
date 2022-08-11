@@ -1,6 +1,6 @@
 class Solution {
     public int approach1(int[] nums){
-        // Approach 1: Using Count Sort
+        // Approach 1: Indexing Based Hashing
         int n = nums.length;
         
         for(int i=0; i<n; i++){
@@ -9,10 +9,11 @@ class Solution {
         }
         
         for(int i=0; i<n; i++){
-            if(nums[i] / (n + 1) >= 2) 
-                return (i + 1);
+            if(nums[i] / (n + 1) > 1)
+                return i + 1;
         }
-        return (n + 1);
+        
+        return n;
     }
     
     public int approach2(int[] nums){
@@ -34,6 +35,6 @@ class Solution {
     }
     
     public int findDuplicate(int[] nums) {
-        return approach2(nums);
+        return approach1(nums);
     }
 }
