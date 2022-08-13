@@ -17,7 +17,7 @@ class Solution {
     }
     
     public int minEatingSpeed(int[] piles, int time) {
-        long left = 1l, right = maxOfArray(piles), ans = right;
+        long left = 1l, right = Integer.MAX_VALUE, ans = right;
         
         while(left <= right){
             long mid = left + (right - left) / 2;
