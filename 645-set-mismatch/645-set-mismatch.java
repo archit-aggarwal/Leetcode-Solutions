@@ -7,13 +7,12 @@ class Solution {
             nums[val - 1] += (n + 1);
         }
         
-        int missing = -1, duplicate = -1;
-        
+        int missing = 0, repeating = 0;
         for(int i=0; i<n; i++){
-            if(nums[i] / (n + 1) > 1) duplicate = (i + 1);
-            if(nums[i] <= n) missing = (i + 1);
+            if(nums[i] / (n + 1) == 0) missing = (i + 1);
+            if(nums[i] / (n + 1) == 2) repeating = (i + 1);
         }
         
-        return new int[]{duplicate, missing};
+        return new int[]{repeating, missing};
     }
 }
