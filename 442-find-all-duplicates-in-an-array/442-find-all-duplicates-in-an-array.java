@@ -9,8 +9,10 @@ class Solution {
         
         List<Integer> res = new ArrayList<>();
         for(int i=0; i<n; i++){
-            if(nums[i] / (n + 1) == 2) res.add(i + 1);
+            if(nums[i] / (n + 1) > 1)
+                res.add(i + 1);
         }
+        
         return res;
     }
 }
