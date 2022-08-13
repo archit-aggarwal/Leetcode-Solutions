@@ -1,19 +1,25 @@
 class Solution {
     public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
-        if(k == 0 || nums.length < 2) return false;
+        TreeSet<Long> vis = new TreeSet<>();
         
-        TreeSet<Long> set = new TreeSet<>();
-        
-        for(int i = 0; i < nums.length; i++){
-            long val = (long)nums[i]; 
-            Long floor = set.floor(val);
-            Long ceil = set.ceiling(val);
+        for(int i=0; i<nums.length; i++){
+            if(i - k - 1 >= 0){
+                // Remove the Element which is out of the window
+                vis.remove((long)nums[i - k - 1]);
+            }
             
-            if((floor != null && val - floor <= t) || (ceil != null && ceil - val <= t) )
+            Long floor = vis.floor((long)nums[i]);
+            Long ceil = vis.ceiling((long)nums[i]);
+            
+            if(floor != null && (long)nums[i] - floor <= t){
                 return true;
+            }
             
-            set.add(val);
-            if(i >= k) set.remove((long)nums[i - k]);
+            if(ceil != null && ceil - (long)nums[i] <= t){
+                return true;
+            }
+            
+            vis.add((long)nums[i]);
         }
         
         return false;
