@@ -15,9 +15,10 @@ class Solution {
         for(int i=0; i<a.length(); i++){
             freq[a.charAt(i) - 'a']--;
             
-            if(i < b.length() - 1) continue;
-            if(i >= b.length()) freq[a.charAt(i - b.length()) - 'a']++; 
-            if(isAnagram(freq) == true) res.add(i - b.length() + 1);
+            if(i >= b.length()) 
+                freq[a.charAt(i - b.length()) - 'a']++; 
+            if(isAnagram(freq) == true) 
+                res.add(i - b.length() + 1);
         }
         
         return res;
