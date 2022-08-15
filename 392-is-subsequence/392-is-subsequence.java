@@ -1,16 +1,16 @@
 class Solution {
-    public boolean isSubsequence(String required, String actual) {
-        if(required.length() == 0) return true;
-        int ptr = 0;
+    public boolean isSubsequence(String s, String t) {
+        int i = 0, j = 0;
         
-        for(int i=0; i<actual.length(); i++){
-            if(required.charAt(ptr) == actual.charAt(i)){
-                ptr++;
-            } 
-            
-            if(ptr == required.length()) return true;
+        while(i < s.length() && j < t.length()){
+            if(s.charAt(i) == t.charAt(j)){
+                i++; j++;
+            } else {
+                j++;
+            }
         }
         
+        if(i == s.length()) return true;
         return false;
     }
 }
