@@ -27,7 +27,7 @@ class Solution {
 //     }
     
     public void approach2(int[][] matrix){
-        // Extra Space - O(N * M) 
+        // Extra Space - O(N * M), Time = O(N * M)
         
         int[][] copy = Arrays.stream(matrix).map(int[]::clone).toArray(int[][]::new);
         // creating a copy of 2d matrix
@@ -42,7 +42,32 @@ class Solution {
         }
     }
     
+    public void approach3(int[][] matrix){
+        // Extra Space - O(N + M), Time = O(N * M)
+        
+        boolean[] rows = new boolean[matrix.length];
+        boolean[] cols = new boolean[matrix[0].length];
+        
+        for(int i=0; i<matrix.length; i++){
+            for(int j=0; j<matrix[0].length; j++){
+                if(matrix[i][j] == 0){
+                    rows[i] = cols[j] = true;
+                }
+            }
+        }
+        
+        for(int i=0; i<matrix.length; i++){
+            for(int j=0; j<matrix[0].length; j++){
+                if(rows[i] == true || cols[j] == true){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+    
+    
+    
     public void setZeroes(int[][] matrix) {
-        approach2(matrix);
+        approach3(matrix);
     }
 }
