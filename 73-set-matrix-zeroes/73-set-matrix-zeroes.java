@@ -69,11 +69,16 @@ class Solution {
         // Extra Space - O(N + M), Time = O(N * M)
         
         boolean row0 = false;
+        boolean col0 = false;
+        
         for(int i=0; i<matrix.length; i++){
             for(int j=0; j<matrix[0].length; j++){
                 if(matrix[i][j] == 0){
                     if(i == 0) row0 = true;
-                    else matrix[i][0] = matrix[0][j] = 0;
+                    if(j == 0) col0 = true;
+                    
+                    if(i != 0 && j != 0)
+                    matrix[i][0] = matrix[0][j] = 0;
                 }
             }
         }
@@ -86,7 +91,7 @@ class Solution {
             }
         }
         
-        if(matrix[0][0] == 0){
+        if(col0 == true){
             for(int i=0; i<matrix.length; i++){
                 matrix[i][0] = 0;
             }
@@ -97,8 +102,6 @@ class Solution {
                 matrix[0][j] = 0;
             }
         }
-        
-        
     }
     
     public void setZeroes(int[][] matrix) {
