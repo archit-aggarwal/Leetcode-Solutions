@@ -10,6 +10,11 @@
  */
 
 class Solution {
+    public ListNode approach1(ListNode head){
+        int size = getSize(head);
+        return getNode(head, size / 2);
+    }
+    
     public int getSize(ListNode head){
         int count = 0;
         while(head != null){
@@ -26,8 +31,18 @@ class Solution {
         return head;
     }
     
+    public ListNode approach2(ListNode head){
+        ListNode slow = head, fast = head;
+        
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next; 
+        }
+        
+        return slow;
+    }
+    
     public ListNode middleNode(ListNode head) {
-        int size = getSize(head);
-        return getNode(head, size / 2);
+        return approach2(head);
     }
 }
