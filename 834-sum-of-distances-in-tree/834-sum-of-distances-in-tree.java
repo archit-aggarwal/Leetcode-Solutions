@@ -2,6 +2,8 @@ class Solution {
     int[] sum, count;
     
     public void DFS1(int src, int par, ArrayList<Integer>[] adj){
+        count[src] = 1;
+        
         for(Integer nbr: adj[src]){
             if(nbr == par) continue;
             DFS1(nbr, src, adj);
@@ -24,7 +26,6 @@ class Solution {
     public int[] sumOfDistancesInTree(int n, int[][] edges) {
         sum = new int[n];
         count = new int[n];
-        Arrays.fill(count, 1);
         
         ArrayList<Integer>[] adj = new ArrayList[n];
         for(int i=0; i<n; i++) adj[i] = new ArrayList<>();
