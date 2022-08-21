@@ -33,7 +33,27 @@ class Solution {
         return head;
     }
     
+    public ListNode approach2(ListNode head, int n){
+        ListNode slow = head, fast = head;
+        
+        int count = 0;
+        while(count < n){
+            count++;
+            fast = fast.next;
+        }
+        
+        if(fast == null) return head.next;
+        
+        while(fast.next != null){
+            slow = slow.next;
+            fast = fast.next;
+        }
+        
+        slow.next = slow.next.next;
+        return head;
+    }
+    
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        return approach1(head, n);
+        return approach2(head, n);
     }
 }
