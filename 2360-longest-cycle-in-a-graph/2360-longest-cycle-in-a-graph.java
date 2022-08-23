@@ -30,12 +30,13 @@ class Solution {
         }
         
         boolean[] vis = new boolean[n];
-        for(int i=0; i<n; i++)
+        for(int i=0; i<n; i++) {
             if(vis[i] == false){
                 counter = 0;
                 dfs(i, vis, new HashMap<>(), adj);
             }
-        
+        }
+    
         return longest;
     }
 }
