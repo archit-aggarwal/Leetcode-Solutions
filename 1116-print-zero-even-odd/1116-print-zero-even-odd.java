@@ -1,13 +1,9 @@
 class ZeroEvenOdd {
-    private int n;
-    private int ptr = 1;
+    private int n, ptr = 1;
     private boolean zeroLock = false;
     
-    public ZeroEvenOdd(int n) {
-        this.n = n;
-    }
+    public ZeroEvenOdd(int n) { this.n = n; }
 
-    // printNumber.accept(x) outputs "x", where x is an integer.
     public synchronized void zero(IntConsumer printNumber) throws InterruptedException {
         while(ptr <= n){
             while(zeroLock == true) wait();
@@ -21,8 +17,7 @@ class ZeroEvenOdd {
         while(ptr <= n){
             while(zeroLock == false || ptr % 2 == 1) wait();
             if(ptr <= n) printNumber.accept(ptr);
-            zeroLock = false;
-            ptr++;
+            zeroLock = false; ptr++;
             notifyAll(); 
         }
     }
@@ -31,8 +26,7 @@ class ZeroEvenOdd {
         while(ptr <= n){
             while(zeroLock == false || ptr % 2 == 0) wait();
             if(ptr <= n) printNumber.accept(ptr);
-            zeroLock = false;
-            ptr++;
+            zeroLock = false; ptr++;
             notifyAll(); 
         }
     }
