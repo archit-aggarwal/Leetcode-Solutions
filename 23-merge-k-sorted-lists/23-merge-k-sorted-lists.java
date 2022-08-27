@@ -32,7 +32,6 @@ class Solution {
      } 
     
     public ListNode helper(ListNode[] lists, int left, int right){
-        if(left > right) return null; 
         if(left == right) return lists[left];
         
         int mid = left + (right - left) / 2;
@@ -44,6 +43,7 @@ class Solution {
     }
     
     public ListNode mergeKLists(ListNode[] lists) {
+        if(lists.length == 0) return null;
         return helper(lists, 0, lists.length - 1);    
     }
 }
