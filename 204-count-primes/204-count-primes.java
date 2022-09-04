@@ -1,24 +1,17 @@
 class Solution {
-    
     public int countPrimes(int n) {
-        // Sieve of Eratosthenes
-        boolean[] prime = new boolean[n + 1];
-        for(int i=2; i<n; i++) prime[i] = true;
+        if(n < 2) return 0;
+        boolean[] prime = new boolean[n];
+        Arrays.fill(prime, true);
+        prime[0] = prime[1] = false;
         
         int count = 0;
         for(int i=2; i<n; i++){
+            if(prime[i] == false) continue;
             
-            if(prime[i] == false){
-                // if the number is composite,
-                // then all it's multiples will be already false
-                continue;
-            }
-            
-            count++; // Because it is a prime no
-            
-            // Making all the multiples of i as not prime
-            for(int j=2*i; j<n; j = j + i){
-                prime[j] = false;
+            count++; // i is a prime number
+            for(long j= 1l * i * i; j < n; j = j + i){
+                prime[(int)j] = false; // mark multiples of i as non-prime
             }
         }
         
