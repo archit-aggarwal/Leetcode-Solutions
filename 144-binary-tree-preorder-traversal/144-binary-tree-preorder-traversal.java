@@ -14,33 +14,17 @@
  * }
  */
 class Solution {
+    List<Integer> preorder = new ArrayList<>();
+    
+    public void dfs(TreeNode root){
+        if(root == null) return;
+        preorder.add(root.val);
+        dfs(root.left);
+        dfs(root.right);
+    }
+    
     public List<Integer> preorderTraversal(TreeNode root) {
-        List<Integer> preorder = new ArrayList<>();
-        
-        while(root != null){
-            if(root.left == null) {
-                preorder.add(root.val);
-                root = root.right;
-                continue;
-            }
-            
-            TreeNode rightMost = root.left;
-            while(rightMost.right != null && rightMost.right != root){
-                rightMost = rightMost.right;
-            }
-            
-            if(rightMost.right == null){
-               // left subtree is not visited
-               preorder.add(root.val);
-               rightMost.right = root;
-               root = root.left;
-            } else {
-                // left subtree is visited
-                rightMost.right = null; 
-                root = root.right;
-            }
-        }
-        
+        dfs(root);
         return preorder;
     }
 }
