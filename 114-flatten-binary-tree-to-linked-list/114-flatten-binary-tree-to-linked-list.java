@@ -38,8 +38,8 @@ class Solution {
             root.right = l.head;
             l.tail.right = r.head;
             
-            if(r.head != null) return new Pair(root, r.tail);
-            return new Pair(root, l.tail);
+            if(r.head == null) 
+                return new Pair(root, l.tail);
         }
         
         return new Pair(root, r.tail); 
