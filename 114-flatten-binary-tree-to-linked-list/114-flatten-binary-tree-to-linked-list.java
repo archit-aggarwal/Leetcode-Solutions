@@ -29,33 +29,24 @@ class Solution {
             return new Pair(root, root);
         }
         
-        if(root.left == null){
-            Pair r = dfs(root.right);
-            root.right = r.head;
-            r.tail.right = null;
-            return new Pair(root, r.tail);
-        }
-        
-        if(root.right == null){
-            Pair l = dfs(root.left);
-            root.left = null;
-            root.right = l.head;
-            l.tail.right = null;
-            return new Pair(root, l.tail);
-        }
-        
         Pair l = dfs(root.left);
         Pair r = dfs(root.right);
         
         root.left = null;
-        root.right = l.head;
-        l.tail.right = r.head;
-        r.tail.right = null;
-        return new Pair(root, r.tail);
+        
+        if(l.head != null){
+            root.right = l.head;
+            l.tail.right = r.head;
+            
+            if(r.head != null) return new Pair(root, r.tail);
+            return new Pair(root, l.tail);
+        }
+        
+        return new Pair(root, r.tail); 
     }
     
     public void flatten(TreeNode root) {
-        if(root != null) dfs(root);
+        dfs(root);
     }
     
 }
