@@ -53,8 +53,21 @@ class Solution
         }
     }
     
+    static void approach2(long arr[], int n){
+        for(int idx = 0; idx < n; idx++){
+            long oldVal = arr[idx] % n;
+            long newVal = arr[(int)arr[idx]] % n;
+            arr[idx] = oldVal + (newVal % n) * n; 
+        }
+        
+        for(int idx = 0; idx < n; idx++){
+            arr[idx] = arr[idx] / n;
+        }
+    }
+    
     static void arrange(long arr[], int n)
     {
-        approach1(arr, n);
+        // approach1(arr, n);
+        approach2(arr, n);
     }
 }
