@@ -57,7 +57,7 @@ class Solution
         for(int idx = 0; idx < n; idx++){
             long oldVal = arr[idx] % n;
             long newVal = arr[(int)arr[idx]] % n;
-            arr[idx] = oldVal + (newVal % n) * n; 
+            arr[idx] = oldVal + newVal * n; 
         }
         
         for(int idx = 0; idx < n; idx++){
