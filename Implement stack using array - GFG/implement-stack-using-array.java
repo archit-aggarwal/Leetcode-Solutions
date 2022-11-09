@@ -46,24 +46,19 @@ class GfG {
 
 // } Driver Code Ends
 
+
 class MyStack
 {
-    int top = 999; // pointing 
-	int arr[] = new int[1000];
-	
+    ArrayList<Integer> arr = new ArrayList<>();
+    
 	//Function to push an integer into the stack.
     void push(int val) {
-        if(top == -1) return; // stack overflow
-        
-        arr[top] = val;
-        top--;
+        arr.add(val); // insert in the last of arraylist
 	} 
 	
     //Function to remove an item from top of the stack.
 	int pop() {
-	    if(top == arr.length - 1) return -1; // stack underflow
-	    
-	    top++;
-	    return arr[top];
+	    if(arr.size() == 0) return -1; // stack underflow
+	    return arr.remove(arr.size() - 1);
 	}
 }
